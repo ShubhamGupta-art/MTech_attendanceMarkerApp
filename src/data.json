@@ -1,0 +1,114 @@
+{
+    "students": [
+        {
+            "rollNumber": "25006801",
+            "name": "MANISH CHAURASIYA"
+        },
+        {
+            "rollNumber": "25006802",
+            "name": "MAYA YADAV"
+        },
+        {
+            "rollNumber": "25006803",
+            "name": "MD RUMMAN RAZA KHAN"
+        },
+        {
+            "rollNumber": "25006804",
+            "name": "MOHINI"
+        },
+        {
+            "rollNumber": "25006805",
+            "name": "NEHA PATIL"
+        },
+        {
+            "rollNumber": "25006806",
+            "name": "OM KISHOR ACHARYA"
+        },
+        {
+            "rollNumber": "25006807",
+            "name": "PRAGYA DHRUW"
+        },
+        {
+            "rollNumber": "25006808",
+            "name": "PRIYA PATEL"
+        },
+        {
+            "rollNumber": "25006809",
+            "name": "ROHIT KUMAR"
+        },
+        {
+            "rollNumber": "25006810",
+            "name": "SADAF FATMA"
+        },
+        {
+            "rollNumber": "25006811",
+            "name": "SAURABH JAISWAL"
+        },
+        {
+            "rollNumber": "25006812",
+            "name": "SAYUJ PATRA"
+        },
+        {
+            "rollNumber": "25006813",
+            "name": "SHUBHAM GUPTA"
+        },
+        {
+            "rollNumber": "25006814",
+            "name": "SURABHI SONI"
+        },
+        {
+            "rollNumber": "25006815",
+            "name": "VAISHNAVI SONI"
+        },
+        {
+            "rollNumber": "25006816",
+            "name": "VANDANA KAUSHIK"
+        },
+        {
+            "rollNumber": "25006817",
+            "name": "VIJAY KUMAR PATRE"
+        }
+    ],
+    "subjects": [
+        {
+            "id": "SPPM",
+            "name": "Software Process & Project Management",
+            "professor": "Alok Kumar Singh Kushwaha"
+        },
+        {
+            "id": "IoT",
+            "name": "Internet of Things",
+            "professor": "Suraj Sharma"
+        },
+        {
+            "id": "ADIP",
+            "name": "Advanced Digital Image Processing",
+            "professor": "Amit Baghel"
+        },
+        {
+            "id": "EPRW",
+            "name": "English for Research Paper Writing",
+            "professor": "Manjunath Swamy B E"
+        },
+        {
+            "id": "AA",
+            "name": "Advanced Algorithms",
+            "professor": "Kapil Nagwanshi"
+        },
+        {
+            "id": "CNS",
+            "name": "Cryptography and Network Security",
+            "professor": "Manish Shrivastava"
+        },
+        {
+            "id": "AA-Lab",
+            "name": "Advanced Algorithm Lab",
+            "professor": "Kapil Nagwanshi"
+        },
+        {
+            "id": "ADIP-Lab",
+            "name": "Advanced DIP Lab",
+            "professor": "Amit Baghel"
+        }
+    ]
+}

@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Academic typography overrides */
+h1, h2, h3 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.attendance-export-container {
+  width: 100%;
+  max-width: 1080px;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 40px 20px;
+  margin: 0 auto;
+}
+
+.divider {
+  height: 1px;
+  background-color: #ffffff;
+  width: 100%;
+  margin: 16px 0;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ffffff;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✓';
+  color: #ffffff;
+  font-size: 14px;
+}
