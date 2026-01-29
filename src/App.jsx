@@ -77,8 +77,10 @@ const App = () => {
         ID.unique(),
         {
           subject: `${selectedSubject.name} (${selectedSubjectId})`,
-          date: today,
-          present: presentRollNumbers,
+          subjectId: selectedSubjectId,
+          subjectName: selectedSubject.name,
+          date: new Date().toISOString(), // Use ISO string for Appwrite datetime column
+          present: presentRollNumbers,   // attribute ID is 'present'
         }
       );
 
