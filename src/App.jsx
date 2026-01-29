@@ -2,12 +2,15 @@ import React, { useState, useRef, useMemo } from 'react';
 import { toPng } from 'html-to-image';
 import data from './data.json';
 import AttendanceHeader from './components/AttendanceHeader';
+import { databases, APPWRITE_CONFIG, ID } from './lib/appwrite';
+import { Save, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
 const App = () => {
   const [selectedSubjectId, setSelectedSubjectId] = useState(data.subjects[0].id);
   const [attendance, setAttendance] = useState(
     data.students.reduce((acc, student) => ({ ...acc, [student.rollNumber]: false }), {})
   );
+  const [saveStatus, setSaveStatus] = useState('idle'); // 'idle' | 'saving' | 'success' | 'error'
 
   const exportRef = useRef(null);
 
@@ -39,11 +42,12 @@ const App = () => {
     }));
   };
 
-  const handleExport = async () => {
+  const handleExportAndSave = async () => {
     if (exportRef.current === null) return;
+    setSaveStatus('saving');
     
-    // Temporarily hide the UI elements during capture is handled by the "present only" view
     try {
+      // 1. Export as PNG
       const dataUrl = await toPng(exportRef.current, {
         cacheBust: true,
         backgroundColor: '#000000',
@@ -53,7 +57,7 @@ const App = () => {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'flex-start',
-          width: '540px', // Targeting a standard phone width for 1x capture
+          width: '540px',
         }
       });
       
@@ -61,8 +65,29 @@ const App = () => {
       link.download = `attendance_${selectedSubjectId}_${todayFilename}.png`;
       link.href = dataUrl;
       link.click();
+
+      // 2. Save to Appwrite
+      const presentRollNumbers = data.students
+        .filter(s => attendance[s.rollNumber])
+        .map(s => s.rollNumber);
+
+      await databases.createDocument(
+        APPWRITE_CONFIG.databaseId,
+        APPWRITE_CONFIG.collectionId,
+        ID.unique(),
+        {
+          subject: `${selectedSubject.name} (${selectedSubjectId})`,
+          date: today,
+          present: presentRollNumbers,
+        }
+      );
+
+      setSaveStatus('success');
+      setTimeout(() => setSaveStatus('idle'), 3000);
     } catch (err) {
-      console.error('Export failed', err);
+      console.error('Export or Save failed', err);
+      setSaveStatus('error');
+      setTimeout(() => setSaveStatus('idle'), 5000);
     }
   };
 
@@ -135,13 +160,47 @@ const App = () => {
           ))}
         </div>
 
-        <button 
-          onClick={handleExport}
-          className="w-full mt-10 border border-white p-3 text-sm font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors"
-        >
-          Export Attendance as PNG
-        </button>
+        <div className="mt-8">
+          <button 
+            onClick={handleExportAndSave}
+            disabled={saveStatus === 'saving'}
+            className={`w-full flex items-center justify-center space-x-3 border p-4 text-sm font-bold uppercase tracking-[0.2em] transition-all ${
+              saveStatus === 'success' 
+                ? 'bg-green-600 border-green-600 text-white' 
+                : saveStatus === 'error'
+                ? 'bg-red-600 border-red-600 text-white'
+                : 'border-white hover:bg-white hover:text-black disabled:opacity-50'
+            }`}
+          >
+            {saveStatus === 'saving' ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : saveStatus === 'success' ? (
+              <CheckCircle2 className="w-5 h-5" />
+            ) : saveStatus === 'error' ? (
+              <AlertCircle className="w-5 h-5" />
+            ) : (
+              <Save className="w-5 h-5" />
+            )}
+            <span>
+              {saveStatus === 'saving' ? 'Exporting & Saving...' : 
+               saveStatus === 'success' ? 'Exported & Saved' : 
+               saveStatus === 'error' ? 'Failed' : 
+               'Export & Save'}
+            </span>
+          </button>
+        </div>
       </div>
+
+      {/* Sticky Footer */}
+      <a 
+        href="https://www.linkedin.com/in/shubham-gupta-866747300?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 flex items-center gap-2 px-4 py-2 bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-full text-[10px] uppercase tracking-widest text-gray-400 hover:text-white hover:border-zinc-600 transition-all group scale-100 hover:scale-105"
+        style={{ textDecoration: 'none' }}
+      >
+        <span>made with ❤️ by sonofdawnn</span>
+      </a>
 
       {/* Hidden Export Template (Exactly what will be in PNG) */}
       <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
