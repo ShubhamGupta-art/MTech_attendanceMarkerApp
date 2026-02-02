@@ -1,9 +1,10 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { toPng } from 'html-to-image';
 import data from './data.json';
 import AttendanceHeader from './components/AttendanceHeader';
 import { databases, APPWRITE_CONFIG, ID } from './lib/appwrite';
 import { Save, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { getCurrentSubjectId } from './utils/timetable';
 
 const App = () => {
   const [selectedSubjectId, setSelectedSubjectId] = useState(data.subjects[0].id);
@@ -13,6 +14,17 @@ const App = () => {
   const [saveStatus, setSaveStatus] = useState('idle'); // 'idle' | 'saving' | 'success' | 'error'
 
   const exportRef = useRef(null);
+
+  useEffect(() => {
+    const autoSubjectId = getCurrentSubjectId();
+    if (autoSubjectId) {
+      // confirm it exists in our data
+      const exists = data.subjects.find(s => s.id === autoSubjectId);
+      if (exists) {
+        setSelectedSubjectId(autoSubjectId);
+      }
+    }
+  }, []);
 
   const selectedSubject = useMemo(() => 
     data.subjects.find(s => s.id === selectedSubjectId),
@@ -201,7 +213,8 @@ const App = () => {
         className="fixed bottom-6 right-6 flex items-center gap-2 px-4 py-2 bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-full text-[10px] uppercase tracking-widest text-gray-400 hover:text-white hover:border-zinc-600 transition-all group scale-100 hover:scale-105"
         style={{ textDecoration: 'none' }}
       >
-        <span>made with ❤️ by sonofdawnn</span>
+        <span className="block md:hidden">made with ❤️</span>
+        <span className="hidden md:block">made with ❤️ by sonofdawnn</span>
       </a>
 
       {/* Hidden Export Template (Exactly what will be in PNG) */}
