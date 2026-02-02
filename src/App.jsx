@@ -199,7 +199,7 @@ const App = () => {
               {saveStatus === 'saving' ? 'Exporting & Saving...' : 
                saveStatus === 'success' ? 'Exported & Saved' : 
                saveStatus === 'error' ? 'Failed' : 
-               'Export & Save'}
+               'Export'}
             </span>
           </button>
         </div>
