@@ -150,6 +150,11 @@ const App = () => {
           date={today}
         />
 
+        <div className="flex justify-between items-center border border-gray-800 p-3">
+          <span className="text-[10px] uppercase tracking-[0.2em] text-gray-400">Total Present</span>
+          <span className="text-sm font-mono text-white">{presentStudents.length} / {data.students.length}</span>
+        </div>
+
         <div className="space-y-3">
           {data.students.map(student => (
             <div key={student.rollNumber} className="flex items-center space-x-4">
